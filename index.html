@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+    <script src="mini-coi.js"></script>
+</head>
+<body>
+  <h2>Bonks</h2>
+  <py-config>
+    packages = ['rich']
+    [files]
+    "score.txt" = "Score.txt"
+    "main.py"= "main.py"
+    "tests.py"= "test.py"
+  </py-config>
+  <script type="py" async worker terminal>
+    from rich.layout import Layout
+    from rich.panel import Panel
+    from rich import print
+    from rich.console import Console
+    from pyscript import display
+    import main
+    console = Console(width=50, color_system="256")
+    layout = Layout()
+    layout.split_column(
+      Layout(name="Player 1",10),
+      Layout(name="Player 2"),
+    )
+    layout["Player 1"].split_row(
+      Layout(name="Right"),
+      Layout(name="Left"),
+    )
+    layout["Player 2"].split_row(
+      Layout(name="right"),
+      Layout(name="left"),
+    )
+
+    layout["Right"].update(":hand:")
+    running = True
+    while running:
+      print(layout)
+      
+      console.log("main.reading", style=main.style, justify=main.justify)
+      running = False
+    
+  </script>
+</body>
+</html>
